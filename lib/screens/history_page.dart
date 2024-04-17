@@ -13,7 +13,6 @@ class HistoryPage extends StatefulWidget {
 
 class _MyHistoryPageState extends State<HistoryPage> {
   late bool _isLoading;
-
   late PageController _pageController;
   late TextEditingController controller;
   @override
@@ -27,6 +26,7 @@ class _MyHistoryPageState extends State<HistoryPage> {
   init() async {
     try {
       _pageController = PageController();
+      controller = TextEditingController();
       await Future.delayed(const Duration(seconds: 5));
       if (mounted) {
         setState(() {
@@ -106,17 +106,47 @@ class _MyHistoryPageState extends State<HistoryPage> {
                                 )),
                             Divider(
                               color: AppColors.textFieldColor,
-                              thickness: 2,
+                              thickness: 1.2,
                             ),
 
                             //Search And Filter
-                            Container(
-                              height: d.pSH(90),
-                              color: Colors.blue,
+                            SizedBox(
+                              height: d.pSH(70),
+                              // color: Colors.blue,
                               child: Row(
                                 children: [
-                                  Expanded(child: TextFormField(
-                                    controller: controller,
+                                  Expanded(
+                                      child: Container(
+                                    padding: EdgeInsets.only(left: d.pSW(10)),
+                                    decoration: BoxDecoration(
+                                        color: AppColors.textFieldColor,
+                                        borderRadius:
+                                            BorderRadius.circular(d.pSH(10))),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        SvgPicture.asset(
+                                            'assets/icons/search_icon.svg'),
+                                        SizedBox(
+                                          width: d.pSW(10),
+                                        ),
+                                        Expanded(
+                                          child: TextFormField(
+                                            controller: controller,
+                                            decoration: InputDecoration(
+                                                border: InputBorder.none,
+                                                hintText: 'Search',
+                                                hintStyle: TextStyle(
+                                                    fontSize: d.pSH(16),
+                                                    color: AppColors
+                                                        .textFieldTextColor)),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   )),
                                   IconButton(
                                       onPressed: () {},
