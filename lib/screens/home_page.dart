@@ -1,16 +1,16 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:hubtel_coding_challenge/constants.dart';
+import 'package:hubtel_coding_challenge/utils/constants.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
 
   @override
-  State<Home> createState() => _MyHomePageState();
+  State<HomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<Home> {
+class _MyHomePageState extends State<HomePage> {
   late bool _isLoading;
   @override
   void initState() {
@@ -22,7 +22,7 @@ class _MyHomePageState extends State<Home> {
 
   init() async {
     try {
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 5));
       if (mounted) {
         setState(() {
           _isLoading = false;
