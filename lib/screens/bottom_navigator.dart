@@ -99,7 +99,8 @@ class _BottomNavigatorState extends State<BottomNavigatorPage> {
         children: [
           SvgPicture.asset(
             "assets/icons/$icon.svg",
-            color: _currentPage == position
+
+            color: icon=="history_icon"?null: _currentPage == position
                 ? Colors.black
                 : Colors.black.withOpacity(0.3),
           ),

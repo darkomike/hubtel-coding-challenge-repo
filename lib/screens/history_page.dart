@@ -1,8 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hubtel_coding_challenge/models/transaction_model.dart';
 import 'package:hubtel_coding_challenge/utils/app_colors.dart';
 import 'package:hubtel_coding_challenge/utils/constants.dart';
+import 'package:grouped_list/grouped_list.dart';
+import 'package:hubtel_coding_challenge/widgets/transaction_card.dart';
+import 'package:intl/intl.dart';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({super.key});
@@ -158,10 +162,54 @@ class _MyHistoryPageState extends State<HistoryPage> {
                           ]),
                         ),
                         Expanded(
-                            child: ListView.builder(
-                          itemCount: 5,
-                          itemBuilder: (context, index) => Container(),
-                        ))
+                          child: GroupedListView<TransactionModel, DateTime>(
+                            elements: trans,
+                            // optional
+                            order: GroupedListOrder.DESC,
+                            groupHeaderBuilder: (transaction) {
+                              final date = DateFormat('MMMM d, y')
+                                  .format(DateTime.parse(transaction.date));
+
+                              return Container(
+                                padding: const EdgeInsets.all(1.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Card(
+                                      elevation: 0,
+                                      color: AppColors.textFieldColor,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(6.0),
+                                        child: Text(
+                                          date,
+                                          style: TextStyle(
+                                              color:
+                                                  AppColors.textFieldTextColor,
+                                              fontSize: 10,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                            groupBy: (transaction) {
+                              return DateTime(
+                                  DateTime.parse(transaction.date).year,
+                                  DateTime.parse(transaction.date).month,
+                                  DateTime.parse(transaction.date).day);
+                            },
+                            useStickyGroupSeparators: false,
+                            floatingHeader: true,
+                            itemBuilder: (context, element) {
+                              return TransactionCard(
+                                model: element,
+                              );
+                            },
+                          ),
+                        )
                       ],
                     ),
                   ),
